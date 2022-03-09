@@ -1,44 +1,33 @@
 <template>
   <div>
     <h1>{{ msg }}</h1>
+    <h2>{{ notebook.procesador }}</h2>
     <div class="container">
       <div class="row">
         <div class="col">
           <table class="table mt-5">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">RUN</th>
-                <th scope="col">Nacimiento</th>
-                <th scope="col">Edad</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">User name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Website</th>
+                <th scope="col">Company</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Jose</td>
-                <td>Pérez</td>
-                <td>123456-2</td>
-                <td>12-04-67</td>
-                <td>57</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>María</td>
-                <td>Rodríguez</td>
-                <td>654321-1</td>
-                <td>30-11-90</td>
-                <td>30</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Manuel</td>
-                <td>Patiño</td>
-                <td>14223456-6</td>
-                <td>02-12-59</td>
-                <td>62</td>
+              <tr v-for="(users, i) in usersDates" :key="i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ users.name }}</td>
+                <td>{{ users.username }}</td>
+                <td>{{ users.email }}</td>
+                <td>{{ users.address.street + users.address.suite }}</td>
+                <td>{{ users.phone }}</td>
+                <td>{{ users.website }}</td>
+                <td>{{ users.company.name }}</td>
               </tr>
             </tbody>
           </table>
@@ -49,8 +38,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "TableComponente",
+  data() {
+    return {
+      saludo: "Hola mundo(Estoy dentro de Vue)",
+      gatos: 2,
+      casado: false,
+      notebook: {
+        procesador: "AMD Ryzen 9 4900H",
+      },
+      nombreGatos: ["Frijol", "Nieblita"],
+      usersDates: [],
+    };
+  },
+  created() {
+    // acá estoy invocando
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      try {
+        const URL = "https://jsonplaceholder.typicode.com/users";
+        const request = await axios.get(URL);
+        this.usersDates = request.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
   props: {
     msg: String,
   },
