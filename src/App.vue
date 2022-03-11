@@ -1,16 +1,22 @@
 <template>
   <div id="app">
-    <TableComponent msg="Tabla de usuarios" />
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <TablePacientes msg="Tabla de pacientes" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import TableComponent from "./components/TableComponent.vue";
+import TablePacientes from "./components/TablePacientes.vue";
 
 export default {
   name: "App",
   components: {
-    TableComponent,
+    TablePacientes,
   },
 };
 </script>
